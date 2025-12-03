@@ -133,17 +133,28 @@ def test_exceptions():
     
     try:
         processor.get_rows_by_number(10)
-        print("❌ Должна быть ошибка при некорректном индексе")
+        print("FAIL: Должна быть ошибка при некорректном индексе")
         return False
     except Exception as e:
-        print(f"✓ Корректная ошибка при get_rows_by_number(10): {type(e).__name__}")
+        print(f"PASS: Ошибка при некорректном индексе: {type(e).__name__}")
     
     try:
-        processor.div("test", 0)
-        print("❌ Должна быть ошибка при делении на ноль")
+        processor.get_values("несуществующий_столбец")
+        print("FAIL: Должна быть ошибка при некорректном столбце")
         return False
     except Exception as e:
-        print(f"✓ Корректная ошибка при делении на ноль: {type(e).__name__}")
+        print(f"PASS: Ошибка при некорректном столбце: {type(e).__name__}")
+    
+    text_data = [["текст"]]
+    text_table = TableData(text_data, ["text_col"])
+    text_processor = TableProcessor(text_table)
+    
+    try:
+        text_processor.add("text_col", 1)
+        print("FAIL: Должна быть ошибка при операции с нечисловым типом")
+        return False
+    except Exception as e:
+        print(f"PASS: Ошибка при операции с нечисловым типом: {type(e).__name__}")
     
     return True
 
