@@ -283,11 +283,10 @@ class TableProcessor:
                 if isinstance(v2, bool):
                     v2 = int(v2)
                 
-                result = operation(v1, v2)
-                
                 if op_name == "div" and v2 == 0:
                     raise OperationError("Деление на ноль")
-                    
+                
+                result = operation(v1, v2)                    
                 results.append(result)
             except Exception as e:
                 raise OperationError(f"Ошибка операции {op_name}: {e}")
